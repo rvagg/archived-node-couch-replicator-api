@@ -21,7 +21,7 @@ const hyperquest     = require('hyperquest')
 }
 */
 
-function add (user, pass, couch, id, doc, callback) {
+function add (couch, user, pass, id, doc, callback) {
   doc = xtend(doc, { _id: id })
 
   var data    = JSON.stringify(doc)

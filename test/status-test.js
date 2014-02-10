@@ -10,7 +10,7 @@ test('test simple status', function (t) {
     , server         = testServer([ expectedStatus ])
 
   server.on('port', function (port) {
-    status('auser', 'apass', 'http://localhost:' + port, function (err, data) {
+    status('http://localhost:' + port, 'auser', 'apass', function (err, data) {
       t.notOk(err, 'no error')
       t.deepEqual(data, expectedStatus, 'got expected status')
     })
@@ -37,7 +37,7 @@ test('test no replication status', function (t) {
   var server = testServer([ { foo: 'bar' } ])
 
   server.on('port', function (port) {
-    status('auser', 'apass', 'http://localhost:' + port, function (err) {
+    status('http://localhost:' + port, 'auser', 'apass', function (err) {
       t.ok(err, 'got error')
       t.ok((/Unexpected response/i).test(err.message), 'got expected error')
     })
@@ -55,7 +55,7 @@ test('test no status', function (t) {
   var server = testServer([ ])
 
   server.on('port', function (port) {
-    status('auser', 'apass', 'http://localhost:' + port, function (err) {
+    status('http://localhost:' + port, 'auser', 'apass', function (err) {
       t.ok(err, 'got error')
       t.ok((/Unexpected response/i).test(err.message), 'got expected error')
     })

@@ -4,7 +4,7 @@ const hyperquest = require('hyperquest')
     , statusUrl  = '/_active_tasks'
 
 
-function status (user, pass, couch, callback) {
+function status (couch, user, pass, callback) {
   hyperquest(couch + statusUrl, { auth: user + ':' + pass }).pipe(bl(function (err, data) {
     if (err)
       return callback(err)

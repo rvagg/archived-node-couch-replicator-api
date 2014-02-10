@@ -6,14 +6,14 @@ const hyperquest     = require('hyperquest')
     , replicatorBase = '/_replicator/'
 
 
-function del (user, pass, couch, id, rev, callback) {
+function del (couch, user, pass, id, rev, callback) {
   if (typeof rev == 'function') {
     callback = rev
-    return get(user, pass, couch, id, function (err, data) {
+    return get(couch, user, pass, id, function (err, data) {
       if (err)
         return callback(err)
 
-      del(user, pass, couch, id, data._rev, callback)
+      del(couch, user, pass, id, data._rev, callback)
     })
   }
 

@@ -11,7 +11,7 @@ test('test simple get', function (t) {
     , server      = testServer(expectedGet)
 
   server.on('port', function (port) {
-    get('auser', 'apass', 'http://localhost:' + port, expectedId, function (err, data) {
+    get('http://localhost:' + port, 'auser', 'apass', expectedId, function (err, data) {
       t.notOk(err, 'no error')
       t.deepEqual(data, expectedGet, 'got expected get')
     })
@@ -39,7 +39,7 @@ test('test no get', function (t) {
     , expectedId = 'foo'
 
   server.on('port', function (port) {
-    get('auser', 'apass', 'http://localhost:' + port, expectedId, function (err) {
+    get('http://localhost:' + port, 'auser', 'apass', expectedId, function (err) {
       t.ok(err, 'got error')
       t.ok((/Got error from couch/i).test(err.message), 'got expected error')
     })

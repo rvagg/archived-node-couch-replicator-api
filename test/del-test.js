@@ -13,7 +13,7 @@ test('test simple del, no rev', function (t) {
     , server       = testServer(expectedDel)
 
   server.on('port', function (port) {
-    del('auser', 'apass', 'http://localhost:' + port, expectedId, function (err, data) {
+    del('http://localhost:' + port, 'auser', 'apass', expectedId, function (err, data) {
       t.notOk(err, 'no error')
       t.deepEqual(data, expectedDel, 'got expected del')
     })
@@ -56,7 +56,7 @@ test('test simple del, with rev', function (t) {
     , server       = testServer(expectedDel)
 
   server.on('port', function (port) {
-    del('auser', 'apass', 'http://localhost:' + port, expectedId, expectedRev, function (err, data) {
+    del('http://localhost:' + port, 'auser', 'apass', expectedId, expectedRev, function (err, data) {
       t.notOk(err, 'no error')
       t.deepEqual(data, expectedDel, 'got expected del')
     })
@@ -89,7 +89,7 @@ test('test no del', function (t) {
     , expectedId = 'foo'
 
   server.on('port', function (port) {
-    del('auser', 'apass', 'http://localhost:' + port, expectedId, function (err, data) {
+    del('http://localhost:' + port, 'auser', 'apass', expectedId, function (err, data) {
       t.ok(err, 'got error')
       t.ok((/Got error from couch/i).test(err.message), 'got expected error')
     })

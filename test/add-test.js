@@ -13,7 +13,7 @@ test('test simple add', function (t) {
     , server       = testServer(expectedAdd)
 
   server.on('port', function (port) {
-    add('auser', 'apass', 'http://localhost:' + port, expectedId, xtend(expectedData), function (err, data) {
+    add('http://localhost:' + port, 'auser', 'apass', expectedId, xtend(expectedData), function (err, data) {
       t.notOk(err, 'no error')
       t.deepEqual(data, expectedAdd, 'got expected add')
     })
@@ -49,7 +49,7 @@ test('test no add', function (t) {
     , expectedId = 'foo'
 
   server.on('port', function (port) {
-    add('auser', 'apass', 'http://localhost:' + port, expectedId, { foo: 'bar' }, function (err, data) {
+    add('http://localhost:' + port, 'auser', 'apass', expectedId, { foo: 'bar' }, function (err, data) {
       t.ok(err, 'got error')
       t.ok((/Got error from couch/i).test(err.message), 'got expected error')
     })
