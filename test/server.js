@@ -24,7 +24,7 @@ function testServer (status) {
   setTimeout(function () {
     server.close()
     ee.emit('close')
-  }, 50)
+  }, 100)
 
   return ee
 }
