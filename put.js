@@ -21,7 +21,7 @@ const hyperquest     = require('hyperquest')
 }
 */
 
-function add (couch, user, pass, id, doc, callback) {
+function put (couch, user, pass, id, doc, callback) {
   doc = xtend(doc, { _id: id })
 
   var data    = JSON.stringify(doc)
@@ -51,4 +51,4 @@ function add (couch, user, pass, id, doc, callback) {
 }
 
 
-module.exports = add
+module.exports = put

@@ -19,8 +19,8 @@ CouchReplicatorApi.prototype.get    = function (callback) {
 }
 
 
-CouchReplicatorApi.prototype.add    = function (doc, callback) {
-  CouchReplicatorApi.add(this.url, this.user, this.pass, this.db, doc, callback)
+CouchReplicatorApi.prototype.put    = function (doc, callback) {
+  CouchReplicatorApi.put(this.url, this.user, this.pass, this.db, doc, callback)
 }
 
 
@@ -31,7 +31,7 @@ CouchReplicatorApi.prototype.del    = function (rev, callback) {
 
 CouchReplicatorApi.status = require('./status')
 CouchReplicatorApi.del    = require('./del')
-CouchReplicatorApi.add    = require('./add')
+CouchReplicatorApi.put    = require('./put')
 CouchReplicatorApi.get    = require('./get')
 
 

@@ -1,29 +1,29 @@
 const test       = require('tape')
     , xtend      = require('xtend')
     , testServer = require('./server')
-    , add        = require('../add')
+    , put        = require('../put')
     , Api        = require('../')
 
 
-function makeSimpleAddTest (type) {
+function makeSimplePutTest (type) {
   return function (t) {
     t.plan(8)
 
-    var expectedAdd  = { ok: 'foo' }
+    var expectedPut  = { ok: 'foo' }
       , expectedId   = 'foo'
       , expectedData = { foo: 'bar', boom: 'bang' }
-      , server       = testServer(expectedAdd)
+      , server       = testServer(expectedPut)
 
     server.on('port', function (port) {
       if (type == 'direct') {
-        add('http://localhost:' + port, 'auser', 'apass', expectedId, xtend(expectedData), function (err, data) {
+        put('http://localhost:' + port, 'auser', 'apass', expectedId, xtend(expectedData), function (err, data) {
           t.notOk(err, 'no error')
-          t.deepEqual(data, expectedAdd, 'got expected add')
+          t.deepEqual(data, expectedPut, 'got expected put')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).add(xtend(expectedData), function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).put(xtend(expectedData), function (err, data) {
           t.notOk(err, 'no error')
-          t.deepEqual(data, expectedAdd, 'got expected add')
+          t.deepEqual(data, expectedPut, 'got expected put')
         })
       }
     })
@@ -42,7 +42,7 @@ function makeSimpleAddTest (type) {
     })
 
     server.on('data', function (data) {
-      t.deepEqual(JSON.parse(data), xtend(expectedData, { _id: 'foo' }), 'got expected add data')
+      t.deepEqual(JSON.parse(data), xtend(expectedData, { _id: 'foo' }), 'got expected put data')
     })
 
     server.on('close', function () {
@@ -52,7 +52,7 @@ function makeSimpleAddTest (type) {
 }
 
 
-function makeNoAddTest (type) {
+function makeNoPutTest (type) {
   return function (t) {
     t.plan(3)
 
@@ -61,12 +61,12 @@ function makeNoAddTest (type) {
 
     server.on('port', function (port) {
       if (type == 'direct') {
-        add('http://localhost:' + port, 'auser', 'apass', expectedId, { foo: 'bar' }, function (err, data) {
+        put('http://localhost:' + port, 'auser', 'apass', expectedId, { foo: 'bar' }, function (err, data) {
           t.ok(err, 'got error')
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).add({ foo: 'bar' }, function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).put({ foo: 'bar' }, function (err, data) {
           t.ok(err, 'got error')
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })
@@ -79,10 +79,10 @@ function makeNoAddTest (type) {
   }
 }
 
-test('test simple add (direct)', makeSimpleAddTest('direct'))
+test('test simple put (direct)', makeSimplePutTest('direct'))
 
-test('test simple add (obj)', makeSimpleAddTest('obj'))
+test('test simple put (obj)', makeSimplePutTest('obj'))
 
-test('test no add (direct)', makeNoAddTest('direct'))
+test('test no put (direct)', makeNoPutTest('direct'))
 
-test('test no add (obj)', makeNoAddTest('obj'))
+test('test no put (obj)', makeNoPutTest('obj'))
