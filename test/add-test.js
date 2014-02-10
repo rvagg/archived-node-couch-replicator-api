@@ -21,7 +21,7 @@ function makeSimpleAddTest (type) {
           t.deepEqual(data, expectedAdd, 'got expected add')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass').add(expectedId, xtend(expectedData), function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).add(xtend(expectedData), function (err, data) {
           t.notOk(err, 'no error')
           t.deepEqual(data, expectedAdd, 'got expected add')
         })
@@ -66,7 +66,7 @@ function makeNoAddTest (type) {
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass').add(expectedId, { foo: 'bar' }, function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).add({ foo: 'bar' }, function (err, data) {
           t.ok(err, 'got error')
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })

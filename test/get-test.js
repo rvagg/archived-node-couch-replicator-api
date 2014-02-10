@@ -19,7 +19,7 @@ function makeSimpleGetTest (type) {
           t.deepEqual(data, expectedGet, 'got expected get')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass').get(expectedId, function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).get(function (err, data) {
           t.notOk(err, 'no error')
           t.deepEqual(data, expectedGet, 'got expected get')
         })
@@ -56,7 +56,7 @@ function makeNoGetTest (type) {
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })
       } else {
-          new Api('http://localhost:' + port, 'auser', 'apass').get(expectedId, function (err) {
+          new Api('http://localhost:' + port, 'auser', 'apass', expectedId).get(function (err) {
           t.ok(err, 'got error')
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })

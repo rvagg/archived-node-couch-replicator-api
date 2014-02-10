@@ -4,7 +4,7 @@ const hyperquest = require('hyperquest')
     , statusUrl  = '/_active_tasks'
 
 
-function status (couch, user, pass, callback) {
+function status (couch, user, pass, target, callback) {
   hyperquest(couch + statusUrl, { auth: user + ':' + pass }).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
@@ -18,7 +18,7 @@ function status (couch, user, pass, callback) {
       return callback(new Error('Unexpected response from couch: ' + data.toString()))
 
     _data = _data.filter(function (s) {
-      return s && s.type == 'replication'
+      return s && s.type == 'replication' && s.target == target
     })[0]
 
     if (!_data)

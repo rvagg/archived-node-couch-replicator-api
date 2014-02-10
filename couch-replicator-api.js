@@ -1,30 +1,31 @@
 
-function CouchReplicatorApi (url, user, pass) {
+function CouchReplicatorApi (url, user, pass, db) {
   if (!(this instanceof CouchReplicatorApi))
     return new CouchReplicatorApi(url, user, pass)
 
   this.url  = url
   this.user = user
   this.pass = pass
+  this.db   = db
 }
 
 CouchReplicatorApi.prototype.status = function (callback) {
-  CouchReplicatorApi.status(this.url, this.user, this.pass, callback)
+  CouchReplicatorApi.status(this.url, this.user, this.pass, this.db, callback)
 }
 
 
-CouchReplicatorApi.prototype.get    = function (id, callback) {
-  CouchReplicatorApi.get(this.url, this.user, this.pass, id, callback)
+CouchReplicatorApi.prototype.get    = function (callback) {
+  CouchReplicatorApi.get(this.url, this.user, this.pass, this.db, callback)
 }
 
 
-CouchReplicatorApi.prototype.add    = function (id, doc, callback) {
-  CouchReplicatorApi.add(this.url, this.user, this.pass, id, doc, callback)
+CouchReplicatorApi.prototype.add    = function (doc, callback) {
+  CouchReplicatorApi.add(this.url, this.user, this.pass, this.db, doc, callback)
 }
 
 
-CouchReplicatorApi.prototype.del    = function (id, rev, callback) {
-  CouchReplicatorApi.del(this.url, this.user, this.pass, id, rev, callback)
+CouchReplicatorApi.prototype.del    = function (rev, callback) {
+  CouchReplicatorApi.del(this.url, this.user, this.pass, this.db, rev, callback)
 }
 
 

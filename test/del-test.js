@@ -21,7 +21,7 @@ function makeSimpleDelNoRevTest (type) {
           t.deepEqual(data, expectedDel, 'got expected del')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass').del(expectedId, function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).del(function (err, data) {
           t.notOk(err, 'no error')
           t.deepEqual(data, expectedDel, 'got expected del')
         })
@@ -73,7 +73,7 @@ function makeSimpleDelWithRevTest (type) {
           t.deepEqual(data, expectedDel, 'got expected del')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass').del(expectedId, expectedRev, function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).del(expectedRev, function (err, data) {
           t.notOk(err, 'no error')
           t.deepEqual(data, expectedDel, 'got expected del')
         })
@@ -115,7 +115,7 @@ function makeNoDelTest (type) {
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })
       } else {
-        new Api('http://localhost:' + port, 'auser', 'apass').del(expectedId, function (err, data) {
+        new Api('http://localhost:' + port, 'auser', 'apass', expectedId).del(function (err, data) {
           t.ok(err, 'got error')
           t.ok((/Got error from couch/i).test(err.message), 'got expected error')
         })
