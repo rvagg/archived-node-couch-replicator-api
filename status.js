@@ -4,7 +4,12 @@ const hyperquest = require('hyperquest')
     , statusUrl  = '/_active_tasks'
 
 
-function status (couch, user, pass, target, callback) {
+function status (couch, user, pass, target, doc_id, callback) {
+  if (typeof doc_id == 'function') {
+    var callback = doc_id
+      , doc_id = false
+  }
+
   hyperquest(couch + statusUrl, { auth: user + ':' + pass }).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
@@ -18,6 +23,8 @@ function status (couch, user, pass, target, callback) {
       return callback(new Error('Unexpected response from couch: ' + data.toString()))
 
     _data = _data.filter(function (s) {
+      if(doc_id)
+        return s && s.type == 'replication' && s.doc_id == doc_id
       return s && s.type == 'replication' && s.target == target
     })[0]
 
