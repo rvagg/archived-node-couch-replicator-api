@@ -5,7 +5,11 @@ const hyperquest = require('hyperquest')
 
 
 function status (couch, user, pass, target, callback) {
-  hyperquest(couch + statusUrl, { auth: user + ':' + pass }).pipe(bl(function (err, data) {
+  var options = { }
+  if(user && pass)
+    options.auth = user + ':' + pass
+
+  hyperquest(couch + statusUrl, options).pipe(bl(function (err, data) {
     if (err)
       return callback(err)
 
